@@ -1,0 +1,36 @@
+{
+  "name": "veegram-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "",
+  "scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register -r dotenv/config src/bin/www.ts",
+    "build": "tsc",
+    "lint": "eslint --ext .ts,.js ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Abdulhamid Zoubi",
+    "email": "zoubi.abdulhamid@gmail.com"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.1",
+    "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
+    "@types/morgan": "^1.9.3",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^16.11.6",
+    "morgan": "^1.10.0",
+    "rimraf": "^3.0.2",
+    "ts-node-dev": "^1.1.8",
+    "url-join": "^4.0.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "tsconfig-paths": "^3.10.1"
+  },
+  "engines": {
+    "node": ">= 14"
+  }
+}

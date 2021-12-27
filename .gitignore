@@ -1,0 +1,11 @@
+.DS_Store
+node_modules/
+.env
+
+# IDE user config
+.vscode/
+.idea/
+.vs/
+
+# Logs
+**/.pnpm-debug*
