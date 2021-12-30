@@ -8,14 +8,20 @@ import http from 'http'
 import type { ListenOptions } from 'net'
 import app from '@/app'
 
-console.log('[Startup]: Launching server process, reading environment variables..')
+import mainLogger from '@/util/logger'
+
+const logger = mainLogger.child({
+  service: 'http-server',
+})
+
+logger.verbose('Launching server process, reading environment variables..')
 
 /**
  * Get port from environment and store in Express.
  */
 const port = normalizePort(process.env.PORT ?? 3000)
 app.set('port', port)
-console.log('attempting attaching to port:', port)
+logger.debug(`Attempt attaching to port: ${port}`)
 
 /**
  * Create HTTP server.
@@ -64,11 +70,11 @@ function onError (error: any): void {
   /*eslint-disable*/
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
+      logger.error(bind + ' requires elevated privileges')
       process.exit(1)
       break
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
+      logger.error(bind + ' is already in use')
       process.exit(1)
       break
     default:
@@ -85,5 +91,5 @@ function onListening () {
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr!.port
-  console.log('Listening on ' + bind)
+  logger.debug('Listening on ' + bind)
 }
