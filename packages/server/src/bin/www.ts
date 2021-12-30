@@ -6,6 +6,7 @@
 
 import http from 'http'
 import type { ListenOptions } from 'net'
+import boot from '@/boot'
 import app from '@/app'
 
 import mainLogger from '@/util/logger'
@@ -27,6 +28,7 @@ logger.debug(`Attempt attaching to port: ${port}`)
  * Create HTTP server.
  */
 const server = http.createServer({}, app)
+boot(server)
 // store server instance so it is accessible
 app.set('serverInstance', server)
 
