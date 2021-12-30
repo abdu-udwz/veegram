@@ -3,7 +3,7 @@ import mainLogger from '@/util/logger'
 
 const logger = mainLogger.child({ service: 'mongo' })
 
-export default () => {
+export default (): void => {
   mongoose.connect(process.env.DATABASE_MONGO_URL ?? 'VeeGram').then(mongoose => {
     logger.debug('connected successfully')
     mongoose.connection.on('error', (error: any) => {
