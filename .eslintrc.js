@@ -42,6 +42,8 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'prefer-promise-reject-errors': 'off',
+    'no-useless-return': 'error',
+
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
     '@typescript-eslint/no-non-null-assertion': 'warn',
@@ -80,6 +82,7 @@ module.exports = {
     '@typescript-eslint/space-before-function-paren': ['error' ],
 
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/prefer-optional-chain': 'warn',
     '@typescript-eslint/no-non-null-assertion': 'warn',
 
