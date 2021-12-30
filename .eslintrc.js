@@ -42,6 +42,8 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'prefer-promise-reject-errors': 'off',
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
     '@typescript-eslint/no-non-null-assertion': 'warn',
     // typescript-eslint rules
     // note you must disable the base rule as it can report incorrect errors
