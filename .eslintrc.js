@@ -82,7 +82,9 @@ module.exports = {
     '@typescript-eslint/space-before-function-paren': ['error' ],
 
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'error',
+    '@typescript-eslint/explicit-function-return-type': ['error', {
+      "allowExpressions": true,
+    }],
     '@typescript-eslint/prefer-optional-chain': 'warn',
     '@typescript-eslint/no-non-null-assertion': 'warn',
 
