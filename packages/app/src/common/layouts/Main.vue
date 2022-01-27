@@ -1,6 +1,6 @@
 <template>
   <VApp>
-    <VAppBar />
+    <VAppBar app />
 
     <VMain class="app--content">
       <RouterView />
