@@ -1,29 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import type { RouteConfig } from 'vue-router'
+import homeRoutes from '@/home/routes'
+import joinRoutes from '@/join/routes'
 
 Vue.use(VueRouter)
 
 const routes: RouteConfig[] = [
-  {
-    path: '/home',
-    component: () => import('@/common/layouts/Main.vue'),
-    children: [
-      {
-        path: '',
-        name: 'home', 
-        component: () => import('@/home/Home.vue'),
-      },
-      {
-        path: '/join',
-        name: 'join',
-        component: () => import ('@/join/Join.vue'),
-        meta: {
-          nonAuthenticated: true,
-        },
-      },
-    ],
-  },
+  ...homeRoutes,
+  ...joinRoutes,
   {
     path: '*',
     redirect: 'home',
