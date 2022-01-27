@@ -14,6 +14,14 @@ const routes: RouteConfig[] = [
         name: 'home', 
         component: () => import('@/home/Home.vue'),
       },
+      {
+        path: '/join',
+        name: 'join',
+        component: () => import ('@/join/Join.vue'),
+        meta: {
+          nonAuthenticated: true,
+        },
+      },
     ],
   },
   {
