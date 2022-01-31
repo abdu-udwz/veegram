@@ -35,13 +35,13 @@ importers:
     dependencies:
       '@vue/composition-api': 1.4.2_vue@2.6.14
       deepmerge: 4.2.2
-      pinia: 2.0.9_4c6e6c9e2a0327ae6b02cec4ba1c64b9
+      pinia: 2.0.9_36d2f728e2505d572049ec41bd4a1032
       vue: 2.6.14
       vue-router: 3.5.3
       vuetify: 2.6.1_vue@2.6.14
     devDependencies:
       '@types/node': 16.11.12
-      eslint-plugin-vue: 8.2.0_eslint@8.4.1
+      eslint-plugin-vue: 8.2.0
       rollup-plugin-visualizer: 5.5.2
       sass: 1.32.13
       unplugin-vue-components: 0.17.8_vite@2.7.1+vue@2.6.14
@@ -63,6 +63,7 @@ importers:
       dotenv: ^10.0.0
       express: ^4.17.1
       express-session: ^1.17.2
+      mongodb: ^4.3.1
       mongoose: ^6.1.4
       morgan: ^1.10.0
       passport: ^0.5.2
@@ -74,10 +75,11 @@ importers:
       winston-daily-rotate-file: ^4.5.5
     dependencies:
       bcrypt: 5.0.1
-      connect-mongo: 4.6.0
+      connect-mongo: 4.6.0_mongodb@4.3.1
       dotenv: 10.0.0
       express: 4.17.2
       express-session: 1.17.2
+      mongodb: 4.3.1
       mongoose: 6.1.4
       passport: 0.5.2
       tsconfig-paths: 3.12.0
@@ -1495,6 +1497,13 @@ packages:
       buffer: 5.7.1
     dev: false
 
+  /bson/4.6.1:
+    resolution: {integrity: sha512-I1LQ7Hz5zgwR4QquilLNZwbhPw0Apx7i7X9kGMBTsqPdml/03Q9NBtD9nt/19ahjlphktQImrnderxqpzeVDjw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      buffer: 5.7.1
+    dev: false
+
   /buffer-from/1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
     dev: true
@@ -1646,7 +1655,7 @@ packages:
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
 
-  /connect-mongo/4.6.0:
+  /connect-mongo/4.6.0_mongodb@4.3.1:
     resolution: {integrity: sha512-8new4Z7NLP3CGP65Aw6ls3xDBeKVvHRSh39CXuDZTQsvpeeU9oNMzfFgvqmHqZ6gWpxIl663RyoVEmCAGf1yOg==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -1654,6 +1663,7 @@ packages:
     dependencies:
       debug: 4.3.3
       kruptein: 3.0.3
+      mongodb: 4.3.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -2113,17 +2123,16 @@ packages:
       tsconfig-paths: 3.12.0
     dev: true
 
-  /eslint-plugin-vue/8.2.0_eslint@8.4.1:
+  /eslint-plugin-vue/8.2.0:
     resolution: {integrity: sha512-cLIdTuOAMXyHeQ4drYKcZfoyzdwdBpH279X8/N0DgmotEI9yFKb5O/cAgoie/CkQZCH/MOmh0xw/KEfS90zY2A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
     dependencies:
-      eslint: 8.4.1
-      eslint-utils: 3.0.0_eslint@8.4.1
+      eslint-utils: 3.0.0
       natural-compare: 1.4.0
       semver: 7.3.5
-      vue-eslint-parser: 8.0.1_eslint@8.4.1
+      vue-eslint-parser: 8.0.1
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2150,6 +2159,15 @@ packages:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 5.3.0
+    dev: true
+
+  /eslint-utils/3.0.0:
+    resolution: {integrity: sha512-uuQC43IGctw68pJA1RgbQS8/NP7rch6Cwd4j3ZBtgo4/8Flj4eGE7ZYSZRN3iq5pVUv6GPdW5Z1RFleo84uLDA==}
+    engines: {node: ^10.0.0 || ^12.0.0 || >= 14.0.0}
+    peerDependencies:
+      eslint: '>=5'
+    dependencies:
+      eslint-visitor-keys: 2.1.0
     dev: true
 
   /eslint-utils/3.0.0_eslint@8.4.1:
@@ -2696,6 +2714,10 @@ packages:
       loose-envify: 1.4.0
     dev: true
 
+  /ip/1.1.5:
+    resolution: {integrity: sha1-vd7XARQpCCjAoDnnLvJfWq7ENUo=}
+    dev: false
+
   /ipaddr.js/1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
     engines: {node: '>= 0.10'}
@@ -3100,6 +3122,18 @@ packages:
       saslprep: 1.0.3
     dev: false
 
+  /mongodb/4.3.1:
+    resolution: {integrity: sha512-sNa8APSIk+r4x31ZwctKjuPSaeKuvUeNb/fu/3B6dRM02HpEgig7hTHM8A/PJQTlxuC/KFWlDlQjhsk/S43tBg==}
+    engines: {node: '>=12.9.0'}
+    dependencies:
+      bson: 4.6.1
+      denque: 2.0.1
+      mongodb-connection-string-url: 2.4.1
+      socks: 2.6.1
+    optionalDependencies:
+      saslprep: 1.0.3
+    dev: false
+
   /mongoose/6.1.4:
     resolution: {integrity: sha512-RsNiMpGWo7OXFmq5xt0ZWYt2rabHLxNYr0oAiR0xDv23lHKCkXDqyDl71+sXF9rcWEe8BTHG+1IRQykiNBvaKQ==}
     engines: {node: '>=12.0.0'}
@@ -3373,7 +3407,7 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /pinia/2.0.9_4c6e6c9e2a0327ae6b02cec4ba1c64b9:
+  /pinia/2.0.9_36d2f728e2505d572049ec41bd4a1032:
     resolution: {integrity: sha512-iuYdxLJKQ07YPyOHYH05wNG9eKWqkP/4y4GE8+RqEYtz5fwHgPA5kr6zQbg/DoEJGnR2XCm1w1vdt6ppzL9ATg==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
@@ -3387,7 +3421,6 @@ packages:
     dependencies:
       '@vue/composition-api': 1.4.2_vue@2.6.14
       '@vue/devtools-api': 6.0.0-beta.21.1
-      typescript: 4.5.3
       vue: 2.6.14
       vue-demi: 0.12.1_36d2f728e2505d572049ec41bd4a1032
     dev: false
@@ -3745,6 +3778,19 @@ packages:
 
   /sliced/1.0.1:
     resolution: {integrity: sha1-CzpmK10Ewxd7GSa+qCsD+Dei70E=}
+    dev: false
+
+  /smart-buffer/4.2.0:
+    resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
+    engines: {node: '>= 6.0.0', npm: '>= 3.0.0'}
+    dev: false
+
+  /socks/2.6.1:
+    resolution: {integrity: sha512-kLQ9N5ucj8uIcxrDwjm0Jsqk06xdpBjGNQtpXy4Q8/QY2k+fY7nZH8CARy+hkbG+SGAovmzzuauCpBlb8FrnBA==}
+    engines: {node: '>= 10.13.0', npm: '>= 3.0.0'}
+    dependencies:
+      ip: 1.1.5
+      smart-buffer: 4.2.0
     dev: false
 
   /source-map-js/1.0.1:
@@ -4211,14 +4257,13 @@ packages:
       vue: 2.6.14
     dev: false
 
-  /vue-eslint-parser/8.0.1_eslint@8.4.1:
+  /vue-eslint-parser/8.0.1:
     resolution: {integrity: sha512-lhWjDXJhe3UZw2uu3ztX51SJAPGPey1Tff2RK3TyZURwbuI4vximQLzz4nQfCv8CZq4xx7uIiogHMMoSJPr33A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
     dependencies:
       debug: 4.3.3
-      eslint: 8.4.1
       eslint-scope: 6.0.0
       eslint-visitor-keys: 3.1.0
       espree: 9.2.0
