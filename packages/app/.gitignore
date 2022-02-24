@@ -1,2 +1,6 @@
 # ignore rollup-plugin-visualizer stat
 stats.html
+# keep .env for production and shared evelopment
+!.env
+# ignore local, machine-specific env vars
+.env.*.local
