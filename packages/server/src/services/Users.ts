@@ -39,7 +39,7 @@ export async function createNewUser (userInfo: UserInfo): Promise<UserDocument |
 
   // ============= password validation =============== //
   user.password = userInfo.password
-  if (isValidPassword(user.password)) {
+  if (!isValidPassword(user.password)) {
     validationErrors.push('INVALID_PASSWORD')
   }
   // ================================================= //
