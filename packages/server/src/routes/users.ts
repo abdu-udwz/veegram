@@ -1,9 +1,14 @@
 // express
 import { Router } from 'express'
+
+import * as controller from '@/controllers/Users'
+
 // middleware
-import * as auth from '@/middleware/auth'
 const router = Router()
 
-router.get('/', auth.isAuthenticated(), (req, res) => res.status(503).json('route not implemented yet'))
+router.get('/', (req, res) => res.status(503).json('route not implemented yet'))
+
+// user-self routes
+router.get('/me', controller.get)
 
 export default router
