@@ -13,7 +13,8 @@ export default [
     ],
   },
   {
-    path: '*',
-    redirect: 'home',
+    path: '/welcome',
+    name: 'welcome',
+    component: () => import('@/join/Welcome.vue'),
   },
 ] as RouteConfig[]

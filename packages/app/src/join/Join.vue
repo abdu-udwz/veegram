@@ -26,7 +26,7 @@
         >
           <VCardTitle
             tag="h2"
-            class="py-0 title font-weight-regular justify-space-between"
+            class="pb-0 title font-weight-regular justify-space-between"
           >
             <span>{{ currentTitle }}</span>
           </VCardTitle>
@@ -61,11 +61,11 @@
                   />
 
                   <VTextField
-                    v-model="form.signIn.password"
+                    v-model="form.password"
                     label="Password"
-                    :type="form.signIn.showPassword? 'text': 'password'"
-                    :append-icon="form.signIn.showPassword? 'mdi-eye' : 'mdi-eye-off'"
-                    @click:append="form.signIn.showPassword = !form.signIn.showPassword"
+                    :type="form.showPassword? 'text': 'password'"
+                    :append-icon="form.showPassword? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="form.showPassword = !form.showPassword"
                   />
 
                   <VBtn
@@ -85,6 +85,7 @@
                       depressed
                       color="grey darken-2"
                       small
+                      type="button"
                       @click="step = 'SIGN_UP'"
                     >
                       Create account
@@ -111,20 +112,20 @@
                   />
 
                   <VTextField
-                    v-model="form.signUp.name"
+                    v-model="form.name"
                     label="Name"
                     validate-on-blur
                     :rules="[rules.name]"
                   />
 
                   <VTextField
-                    v-model="form.signUp.password"
+                    v-model="form.password"
                     label="Password"
                     validate-on-blur
                     :rules="[rules.password]"
-                    :type="form.signUp.showPassword? 'text': 'password'"
-                    :append-icon="form.signUp.showPassword? 'mdi-eye' : 'mdi-eye-off'"
-                    @click:append="form.signUp.showPassword = !form.signUp.showPassword"
+                    :type="form.showPassword? 'text': 'password'"
+                    :append-icon="form.showPassword? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="form.showPassword = !form.showPassword"
                   />
 
                   <VBtn
@@ -144,6 +145,7 @@
                       depressed
                       color="grey darken-2"
                       class="ms-1"
+                      type="button"
                       @click="step='SIGN_IN'"
                     >
                       Sign-in
@@ -162,6 +164,14 @@
 <script lang="ts">
 // vue
 import Vue from 'vue'
+import {
+  localSignUp as sendLocalSignUpReq,
+  localSignIn as sendLocalSignInReq,
+} from './api'
+// util
+import axios from 'axios'
+
+type JoinWindowStep = 'SIGN_IN' | 'SIGN_UP'
 
 export default Vue.extend({
   name: 'JoinPage',
@@ -173,24 +183,18 @@ export default Vue.extend({
       appBar: false,
       bottomNavigation: false,
 
-      step: 'SIGN_IN',
+      step: 'SIGN_IN' as JoinWindowStep,
 
-      errorMessages: [],
+      internalErrors: [] as any[],
 
       language: 'en',
 
       form: {
         username: '',
-        signIn: {
-          password: '',
-          showPassword: false,
-        },
-
-        signUp: {
-          name: '',
-          password: '',
-          showPassword: false,
-        },
+        password: '',
+        showPassword: false,
+        // sign up only
+        name: '',
       },
 
       submitting: false,
@@ -219,11 +223,9 @@ export default Vue.extend({
           if (/\s/g.test(realVal))
             return 'Spaces aren\'t allowed.'
 
-          // SO => https://stackoverflow.com/questions/32311081/check-for-special-characters-in-string
-          // check for special characters in name.
           let specialChars = /[^_.a-z0-9]/
           if (specialChars.test(realVal))
-            return 'Only Latin characters, Numbers, underscores and periods'
+            return 'Only Latin characters, Numbers, underscores and periods.'
 
           return true
         },
@@ -250,11 +252,29 @@ export default Vue.extend({
           return 'UNKNOWN_ERROR'
       }
     },
+
+    errorMessages (): string [] {
+      return this.internalErrors.map(error => {
+        switch (error) {
+          case 'INVALID_NAME':
+          case 'INVALID_USERNAME':
+            return 'Name or username is not accepted'
+          case 'USERNAME_ALREADY_EXIST':
+            return 'Username is already used'
+          case 'INVALID_PASSWORD':
+            return 'Password is to weak or contains characters that are not allowed'
+          case 'INCORRECT_CREDENTIALS':
+            return 'Username and/or password are incorrect'
+          default:
+            return 'An unknown error'
+        }
+      })
+    },
   },
 
   methods: {
     async localSignUp () {
-      this.errorMessages = []
+      this.internalErrors = []
 
       if (this.$refs.signUpForm != null) {
         if (! (this.$refs.signUpForm as any).validate()) {
@@ -262,29 +282,59 @@ export default Vue.extend({
         }
       }
 
-      this.submitting = true
-      // make api request and update app state
-      this.submitting = false
-    },
-
-    async localSignIn () {
-      const { username, signIn: { password } } = this.form
-
-      if (username && password) {
-        this.errorMessages = []
+      try {
         this.submitting = true
-        // do api request and update app state
+        await sendLocalSignUpReq({
+          name: this.form.name,
+          username: this.form.username,
+          password: this.form.password,
+        })
+        await this.onFinished()
+      } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+          this.internalErrors = error.response?.data ?? []
+        } else {
+          console.error('an unknown error during sign up', error)
+        }
+      } finally {
         this.submitting = false
       }
     },
 
-    onFinished () {
+    async localSignIn () {
+      const { username, password } = this.form
+
+      if (username && password) {
+        this.internalErrors = []
+        try {
+          // do api request and update app state
+          this.submitting = true
+          await sendLocalSignInReq({
+            username,
+            password,
+          })
+
+          await this.onFinished()
+        } catch (error: any) {
+          if (axios.isAxiosError(error)) {
+            // console.log(error.response?.data, error.response?.status)
+            this.internalErrors = [error.response?.data]
+          } else {
+            console.error('something went wrong while signing in ', error)
+          }
+        } finally {
+          this.submitting = false
+        }
+      }
+    },
+
+    async onFinished () {
       let redirect = this.$route.query.redirect
 
-      this.$router.push({
+      await this.$router.push({
         name: 'welcome',
         query: {
-          redirect: redirect,
+          redirect,
         },
       })
     },
