@@ -2,9 +2,16 @@
 // vue
 import Vue from 'vue'
 import type { Location } from 'vue-router'
+// stores
+import { mapStores } from 'pinia'
+import useSessionStore from '@/common/stores/session'
 
 export default Vue.extend({
   name: 'WelcomePage',
+
+  computed: {
+    ...mapStores(useSessionStore),
+  },
 
   mounted () {
     setTimeout(() => {
@@ -62,7 +69,7 @@ export default Vue.extend({
                 <h1
                   class="title font-weight-light"
                 >
-                  Welcome
+                  Welcome, {{ sessionStore.user.username }}
                 </h1>
               </VLazy>
             </section>

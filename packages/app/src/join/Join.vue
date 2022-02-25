@@ -168,6 +168,11 @@ import {
   localSignUp as sendLocalSignUpReq,
   localSignIn as sendLocalSignInReq,
 } from './api'
+// stores
+import { mapStores } from 'pinia'
+import useSessionStore from '@/common/stores/session'
+// types
+import type { User } from '@/common/types'
 // util
 import axios from 'axios'
 
@@ -242,6 +247,7 @@ export default Vue.extend({
   },
 
   computed: {
+    ...mapStores(useSessionStore),
     currentTitle () {
       switch (this.step) {
         case 'SIGN_IN':
@@ -284,12 +290,12 @@ export default Vue.extend({
 
       try {
         this.submitting = true
-        await sendLocalSignUpReq({
+        const res = await sendLocalSignUpReq({
           name: this.form.name,
           username: this.form.username,
           password: this.form.password,
         })
-        await this.onFinished()
+        await this.onFinished(res.data)
       } catch (error: any) {
         if (axios.isAxiosError(error)) {
           this.internalErrors = error.response?.data ?? []
@@ -309,12 +315,12 @@ export default Vue.extend({
         try {
           // do api request and update app state
           this.submitting = true
-          await sendLocalSignInReq({
+          const res = await sendLocalSignInReq({
             username,
             password,
           })
 
-          await this.onFinished()
+          await this.onFinished(res.data)
         } catch (error: any) {
           if (axios.isAxiosError(error)) {
             // console.log(error.response?.data, error.response?.status)
@@ -328,7 +334,8 @@ export default Vue.extend({
       }
     },
 
-    async onFinished () {
+    async onFinished (user: User) {
+      this.sessionStore.initialize(true, user)
       let redirect = this.$route.query.redirect
 
       await this.$router.push({

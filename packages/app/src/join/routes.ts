@@ -9,6 +9,9 @@ export default [
         path: '',
         name: 'join', 
         component: () => import('./Join.vue'),
+        meta: {
+          guestOnly: true,
+        },
       },
     ],
   },

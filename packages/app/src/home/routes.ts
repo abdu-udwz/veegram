@@ -9,6 +9,9 @@ export default [
         path: '',
         name: 'home', 
         component: () => import('./Home.vue'),
+        meta: {
+          authenticatedOnly: true,
+        },
       },
     ],
   },
