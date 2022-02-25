@@ -79,8 +79,6 @@ export async function signIn (credentials: Pick<UserInfo, 'username' | 'password
     return false
   }
 
-  console.log('sfasdfasdf sign in ')
-
   const { password } = credentials
   const passwordCheck = await user.comparePassword(password)
 
