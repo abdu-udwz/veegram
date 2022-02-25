@@ -68,7 +68,8 @@ export async function signIn (credentials: Pick<UserInfo, 'username' | 'password
   let { username } = credentials
 
   username = username.toLocaleLowerCase()
-  const user = await User.findOne({ username })
+  const user = await User.findOne({ username }).select('+password')
+
   if (!user) {
     logger.log({
       level: 'info',
@@ -78,8 +79,11 @@ export async function signIn (credentials: Pick<UserInfo, 'username' | 'password
     return false
   }
 
+  console.log('sfasdfasdf sign in ')
+
   const { password } = credentials
   const passwordCheck = await user.comparePassword(password)
+
   if (passwordCheck) {
     user.lastLogin = new Date()
     await user.save()

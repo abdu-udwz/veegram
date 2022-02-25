@@ -15,6 +15,13 @@ export async function get (req: Request, res: Response): Promise<any> {
     })
     const user = await getUserById(req.user!._id)
     if (user != null) {
+      const responseData = user.toObject()
+      delete responseData.password
+      // @ts-expect-error
+      delete responseData.createdAt
+      // @ts-expect-error
+      delete responseData.updatedAt
+
       return res.json(user)
     } else {
       throw new Error('something while fetching user from database')
