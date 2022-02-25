@@ -31,7 +31,11 @@ const userSchema = new Schema<User, UserModel, UserMethods>(
       required: [true, 'Username is required.'],
     },
 
-    password: { type: String },
+    password: { 
+      type: String,
+      // schema level projection
+      select: 0,
+    },
 
     name: {
       type: String,
