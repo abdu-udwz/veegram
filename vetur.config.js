@@ -1,3 +1,4 @@
 module.exports = {
-  projects: ['./packages/app']
+  projects: ['./packages/app'],
+  tsconfig: './tsconfig.json',
 }

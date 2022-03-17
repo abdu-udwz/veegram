@@ -5,9 +5,11 @@
   "description": "",
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register -r dotenv/config src/bin/www.ts",
-    "build": "tsc",
     "lint": "eslint --ext .ts,.js ./",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:jest": "jest",
+    "test:types": "tsc --noEmit",
+    "build": "tsc"
   },
   "license": "MIT",
   "author": {
